@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
 
 const inputDateTime = document.querySelector('#datetime-picker');
 const buttonStartCount = document.querySelector('[data-start]');
@@ -16,7 +17,7 @@ const options = {
   onClose(selectedDates) {
     if (selectedDates[0] < Date.now()) {
       buttonStartCount.disabled = true;
-      window.alert('Wybierz datę z przyszłości!');
+      Notiflix.Notify.failure('Wybierz datę z przyszłości!');
     } else {
       buttonStartCount.disabled = false;
     }
@@ -51,6 +52,7 @@ function convertMs(ms) {
 function buttonStartClick() {
   buttonStartCount.disabled = true;
   inputDateTime.disabled = true;
+  Notiflix.Notify.info('Rozpoczęto odliczanie');
 
   timer = setInterval(() => {
     const pickedDate = new Date(inputDateTime.value);
