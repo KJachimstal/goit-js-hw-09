@@ -20,10 +20,10 @@ function handleSubmitForm(event) {
     let countDelay = Number(firstDelay.value) + Number(delayStep.value) * i;
 
     createPromise(position, countDelay)
-      .then((position, delay) => {
+      .then(({ position, delay }) => {
         Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
       })
-      .catch((position, delay) => {
+      .catch(({ position, delay }) => {
         Notify.failure(`Fulfilled promise ${position} in ${delay}ms`);
       });
   }
@@ -34,9 +34,9 @@ function createPromise(position, delay) {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
-        resolve(position, delay);
+        resolve({ position, delay });
       } else {
-        reject(position, delay);
+        reject({ position, delay });
       }
     }, delay);
   });
